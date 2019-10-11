@@ -27,15 +27,15 @@ $(document).on('DOMContentLoaded', () => {
         }).then(function(response) {
             console.log(response);
             $("#movies-view").empty();
-            for (var i = 0; i < 10; i++) {
+            for (var i = 0; i < 100; i++) {
             var div = $("<div class='movie_view'>");
+            var title = response[i].title;
+            var p = $("<p>").text(title);
+            div.append(p);
             var poster = "https://cuso.tmsimg.com/" + response[i].preferredImage.uri;
             var image = $('<img>')
             image.attr('src', poster)
             div.append(image);
-            var title = response[i].title;
-            var hTwo = $("<h2>").text("Title: " + title);
-            div.append(hTwo);
             $("#movies-view").append(div);
 
     };
