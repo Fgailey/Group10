@@ -4,6 +4,9 @@ $(document).on('DOMContentLoaded', () => {
   let modals = document.querySelectorAll('.modal');
   M.Modal.init(modals);
 
+  let items = document.querySelectorAll('.collapsible');
+  M.Collapsible.init(items);
+
 });
 
 $(document).ready(function () {
@@ -23,43 +26,26 @@ $(document).ready(function () {
     }).then(function (response) {
       console.log(response);
       $("#movies-view").empty();
-      for (var i = 0; i < 10; i++) {
+      for (var i = 0; i < 100; i++) {
         var div = $("<div class='movie_view'>");
         var title = response[i].title;
         var p = $("<p>").text(title);
         div.append(p);
         var poster = "https://cuso.tmsimg.com/" + response[i].preferredImage.uri;
-        var image = $('<img>')
-        image.attr('src', poster)
+        var image = $('<img>');
+        image.attr('src', poster);
         div.append(image);
-        div.append('<br>')
-        var a = $("<a href='#'>");
-        a.attr('class', 'black-text modal-trigger');
-        a.attr('data-target', 'modal' + [i]);
-        a.text("Click here for showtimes")
+        div.append('<br>');
+        var a = $("<a href='../../showtimes.html'>");
+        a.text("Click here for showtimes");
         div.append(a);
-        var modalDiv = $("<div>");
-        modalDiv.attr('id', 'modal' + [i]);
-        modalDiv.attr('class', 'modal');
-        var modalContentdiv = $("<div class='modal-content'>");
-        modalContentdiv.text('Showtimes');
-        modalDiv.append(modalContentdiv);
-        div.append(modalDiv);
         $("#movies-view").append(div);
         
       };
-      
-        $(document).ready(function () {
 
-        let modals = document.querySelectorAll('.modal');
-        M.Modal.init(modals);
-      
-      });
+    });
 
-
-    })
-
-  })
+  });
   $("#add-event-btn").on("click", (event) => {
 
     event.preventDefault();
@@ -99,7 +85,7 @@ $(document).ready(function () {
         let nImg = $("<img>");
         nImg.attr("src", TM[a].images[0].url);
 
-        $(nDiv).append(nImg)
+        $(nDiv).append(nImg);
       }
 
     });
