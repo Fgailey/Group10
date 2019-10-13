@@ -8,7 +8,7 @@
 // end of document ready
 //Materialize Modals
 $(document).ready(function(){
-  $('.modal').modal();
+  modals=$('.modal').modal();
   M.Modal.init(modals);
 });
 $(document).ready(() => {
@@ -39,7 +39,7 @@ $(document).ready(() => {
         div.append(image);
         div.append('<br>');
         var a = $("<a href='#' class='black-text modal-trigger'>");
-        a.attr('data-type', 'modal-' + [i]);
+        a.attr('data-target', 'modal-' + [i]);
         a.text("Click here for showtimes");
         div.append(a);
         var divModal = $("<div class='modal'>");
@@ -49,12 +49,10 @@ $(document).ready(() => {
         $("#movies-view").append(div);
       };
 
-      var modal = function(){
-        $('.modal').modal();
+      $(document).ready(function(){
+        modals=$('.modal').modal();
         M.Modal.init(modals);
-      };
-
-      $(document).on("click", ".black-text modal-trigger", modal);
+      });
 
     });
 
