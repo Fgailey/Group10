@@ -20,7 +20,7 @@ $(document).ready(() => {
     var startDate = $("#start-date-input").val().trim();
     var zipCode = $("#zip-code-input").val().trim();
     var radius = $("#radius-input").val().trim();
-    var queryURL = "https://data.tmsapi.com/v1.1/movies/showings?startDate=" + startDate + "&zip=" + zipCode + "&radius=" + radius + "&api_key=h22mr6gbzmesjmx4jb5qt67b"
+    var queryURL = "https://data.tmsapi.com/v1.1/movies/showings?startDate=" + startDate + "&zip=" + zipCode + "&radius=" + radius + "&api_key=bvgrz58926bezm5jmeb7jmk2"
 
     $.ajax({
       url: queryURL,
@@ -28,7 +28,7 @@ $(document).ready(() => {
     }).then(function (response) {
       console.log(response);
       $("#movies-view").empty();
-      for (var i = 0; i < 10; i++) {
+      for (var i = 0; i < 100; i++) {
         var div = $("<div class='movie_view'>");
         var title = response[i].title;
         var p = $("<p>").text(title);
@@ -38,14 +38,6 @@ $(document).ready(() => {
         image.attr('src', poster);
         div.append(image);
         div.append('<br>');
-        var a = $("<a href='#' class='black-text modal-trigger'>");
-        a.attr('data-target', 'modal-' + [i]);
-        a.text("Click here for showtimes");
-        div.append(a);
-        var divModal = $("<div class='modal'>");
-        divModal.attr('id', 'modal-' + [i]);
-        divModal.text('Showtimes');
-        div.append(divModal);
         $("#movies-view").append(div);
       };
 
@@ -58,22 +50,6 @@ $(document).ready(() => {
 
   });
 
-  // $(".track").click(function () {
-  //   console.log(response);
-  //   for (var j = 0; j < 100; j++) {
-  //     var divShowview = $("<div class='showArea'>");
-  //     divShowview.text(response[i].showtimes[j].dateTime);
-  //     $("#showtimes-view").append(divShowview);
-  //   };
-  // });
-
-  // var showtimes = function(){
-  //   for (var j = 0; j < 100; j++) {
-  //     var divShowview = $("<div class='showArea'>");
-  //     divShowview.text(response[i].showtimes[j].dateTime);
-  //     $("#showtimes-view").append(divShowview);
-  //   };
-  // };
 
   $("#add-event-btn").click((ev) => {
 
