@@ -7,11 +7,23 @@
 //     }); 
     // end of document ready
     //Materialize Modals
+  
+
     $(document).on('DOMContentLoaded', () => {
     
     let modals = $('.modal');
     M.Modal.init(modals);
+
+    let sideNav = $(".sidenav");
+    M.Sidenav.init(sideNav);
     
+    let slider = $(".slider");
+    M.Slider.init(slider, {
+      indicators: false,
+      height: 350,
+      transition: 350,
+      interval: 6000
+    });
     });
     $(document).ready(()=>{
 
