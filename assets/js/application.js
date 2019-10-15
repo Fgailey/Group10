@@ -134,81 +134,68 @@
     });//click events
     $("#add-place-btn").click((barSearch)=>{
 
-        barSearch.preventDefault();
+      barSearch.preventDefault();
 
-        // Create search input and url variables
+      // Create search input and url variables
 
-// *REMINDER* Check doucmentation for more specific search parameters relating to location
-        var citySearch = $("#z-city-input").val().trim();
-        var keywordSearch = $("#z-keyword-input").val().trim();
-        // var zQueryURL = "https://developers.zomato.com/api/v2.1/search?q="+citySearch+"+"+keywordSearch+"&sort=rating&order=desc";
+      var citySearch = $("#z-city-input").val().trim();
+      var keywordSearch = $("#z-keyword-input").val().trim();
+      // var zQueryURL = "https://developers.zomato.com/api/v2.1/search?q="+citySearch+"+"+keywordSearch+"&sort=rating&order=desc";
 
 
-      var cityID = String;
+    var cityID = String;
 
-      // ajax call to collect city id
+    // ajax call to collect city id
+    $.ajax({  
+      url: `https://developers.zomato.com/api/v2.1/cities?q=${citySearch}`,
+      dataType: 'json',
+      async: true,
+      beforeSend: function(xhr){xhr.setRequestHeader('user-key', 
+      '56127d7074bb1c0676f5c2ffcf0456e7');},  // This inserts the api key into the HTTP header
+    }).then(function (responseID){
+      console.log(responseID.location_suggestions[0].id);
+      cityID = responseID.location_suggestions[0].id;
       $.ajax({  
-        url: `https://developers.zomato.com/api/v2.1/cities?q=${citySearch}`,
+        url: `https://developers.zomato.com/api/v2.1/search?q=${keywordSearch}&sort=rating&order=desc&entity_id=${cityID}&entity_type=city`,
         dataType: 'json',
         async: true,
         beforeSend: function(xhr){xhr.setRequestHeader('user-key', 
         '56127d7074bb1c0676f5c2ffcf0456e7');},  // This inserts the api key into the HTTP header
-      }).then(function (responseID){
-        console.log(responseID.location_suggestions[0].id);
-        cityID = responseID.location_suggestions[0].id;
-        $.ajax({  
-          url: `https://developers.zomato.com/api/v2.1/search?q=${keywordSearch}&sort=rating&order=desc&entity_id=${cityID}&entity_type=city`,
-          dataType: 'json',
-          async: true,
-          beforeSend: function(xhr){xhr.setRequestHeader('user-key', 
-          '56127d7074bb1c0676f5c2ffcf0456e7');},  // This inserts the api key into the HTTP header
-        }).then(function (response){
-          console.log(response);
-          // clear search results from DOM
-          $("#movies-view").empty();
-          $("#local-events").empty();
-          $("#view-places").empty();
-          // Iterate through response array
-          for (var b = 0; b < 20; b++){
-            // console.log(response.restaurants[b].restaurant.name);
-            // create html element to hold desired response object data
-            var display = $("<div class='bar-display'>");
-            // Establishment Name
-            var name = response.restaurants[b].restaurant.name;
-            var nameTag = $("<p id='name-tag'>").text(name);
-            // Type of Cuisine
-            var cuisine = response.restaurants[b].restaurant.cuisines;
-            var cuisineTag = $("<p>").html('<b>Cuisines: </b>' + cuisine);
-            // Address
-            var address = response.restaurants[b].restaurant.location.address;
-            var addressTag = $("<p>").html('<b>Address: </b>' + address);
-            // Rating
-            var rating = response.restaurants[b].restaurant.user_rating.aggregate_rating;
-            var ratingTag = $("<p>").html('<b>Rating: </b>' + rating);
-            // Phone Number
-            var phone = response.restaurants[b].restaurant.phone_numbers;
-            var phoneTag = $("<p>").html('<b>Phone: </b>' + phone);
-            // Establishment Image
-            var image = response.restaurants[b].restaurant.thumb;
-            var imageTag = $("<img class='bar-images'>");
-            imageTag.attr('src', image);
-            display.append(nameTag,ratingTag,"<br>",imageTag,cuisineTag,addressTag,phoneTag);
-            // Append display content to index
-            $("#view-places").append(display);
-      }
-    })
+      }).then(function (response){
+        console.log(response);
+        // clear search results from DOM
+        $("#movies-view").empty();
+        $("#local-events").empty();
+        $("#view-places").empty();
+        // Iterate through response array
+        for (var b = 0; b < 20; b++){
+          // console.log(response.restaurants[b].restaurant.name);
+          // create html element to hold desired response object data
+          var display = $("<div class='bar-display'>");
+          // Establishment Name
+          var name = response.restaurants[b].restaurant.name;
+          var nameTag = $("<p id='name-tag'>").text(name);
+          // Type of Cuisine
+          var cuisine = response.restaurants[b].restaurant.cuisines;
+          var cuisineTag = $("<p>").html('<b>Cuisines: </b>' + cuisine);
+          // Address
+          var address = response.restaurants[b].restaurant.location.address;
+          var addressTag = $("<p>").html('<b>Address: </b>' + address);
+          // Rating
+          var rating = response.restaurants[b].restaurant.user_rating.aggregate_rating;
+          var ratingTag = $("<p>").html('<b>Rating: </b>' + rating);
+          // Phone Number
+          var phone = response.restaurants[b].restaurant.phone_numbers;
+          var phoneTag = $("<p>").html('<b>Phone: </b>' + phone);
+          // Establishment Image
+          var image = response.restaurants[b].restaurant.thumb;
+          var imageTag = $("<img class='bar-images'>");
+          imageTag.attr('src', image);
+          display.append(nameTag,ratingTag,"<br>",imageTag,cuisineTag,addressTag,phoneTag);
+          // Append display content to index
+          $("#view-places").append(display);
+        }
       })
-
-        
-        
-        
-        // original test url
-        // "https://developers.zomato.com/api/v2.1/search?entity_id=288&entity_type=city&q=bars+decatur&sort=rating&order=desc",
-        
-        
-        // possible problem url
-        // url: "https://developers.zomato.com/api/v2.1/search?q="+citySearch+"+"+keywordSearch+"&sort=rating&order=desc",
-        
-        
+    })
   })
 })
