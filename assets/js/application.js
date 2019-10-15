@@ -143,15 +143,26 @@
         var keywordSearch = $("#z-keyword-input").val().trim();
         // var zQueryURL = "https://developers.zomato.com/api/v2.1/search?q="+citySearch+"+"+keywordSearch+"&sort=rating&order=desc";
 
-        "https://developers.zomato.com/api/v2.1/search?entity_id=288&entity_type=city&q=bars+decatur&sort=rating&order=desc",
-        
+
+      var cityID = String;
+
+      // ajax call to collect city id
       $.ajax({  
-        url: "https://developers.zomato.com/api/v2.1/search?q="+citySearch+"+"+keywordSearch+"&sort=rating&order=desc",
+        url: `https://developers.zomato.com/api/v2.1/cities?q=${citySearch}`,
         dataType: 'json',
         async: true,
         beforeSend: function(xhr){xhr.setRequestHeader('user-key', 
         '56127d7074bb1c0676f5c2ffcf0456e7');},  // This inserts the api key into the HTTP header
-      }).then(function (response){
+      }).then(function (responseID){
+        console.log(responseID.location_suggestions[0].id);
+        cityID = responseID.location_suggestions[0].id;
+        $.ajax({  
+          url: `https://developers.zomato.com/api/v2.1/search?q=${keywordSearch}&sort=rating&order=desc&entity_id=${cityID}&entity_type=city`,
+          dataType: 'json',
+          async: true,
+          beforeSend: function(xhr){xhr.setRequestHeader('user-key', 
+          '56127d7074bb1c0676f5c2ffcf0456e7');},  // This inserts the api key into the HTTP header
+        }).then(function (response){
           console.log(response);
           // clear search results from DOM
           $("#movies-view").empty();
@@ -186,5 +197,18 @@
             $("#view-places").append(display);
       }
     })
+      })
+
+        
+        
+        
+        // original test url
+        // "https://developers.zomato.com/api/v2.1/search?entity_id=288&entity_type=city&q=bars+decatur&sort=rating&order=desc",
+        
+        
+        // possible problem url
+        // url: "https://developers.zomato.com/api/v2.1/search?q="+citySearch+"+"+keywordSearch+"&sort=rating&order=desc",
+        
+        
   })
 })
