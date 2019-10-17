@@ -13,26 +13,26 @@ PARTS
 FUNCTION
 *************************
 
-1:1 Users can save plans for later with drag and drop
-1:2 Find Movies/Local Events/Food&Drinks all on one site
+1:1 Users can save plans for later with drag and drop  
+1:2 Find Movies/Local Events/Food&Drinks all on one site  
 
 
 *************************
 API's
 *************************
-2:1  Ticket Master 
-2:2  Zomato
-2:3  Gracenote
+2:1  Ticket Master   
+2:2  Zomato  
+2:3  Gracenote  
 
 
 **************************
 FEATURES
 **************************
-3:1 Allows search by City or Zipcode
-3:2 Find events by date
-3:3 Link to ticket of event
-3:4 Find all movies in your area
-
+3:1 Allows search by City or Zipcode  
+3:2 Find events by date  
+3:3 Link to ticket of event  
+3:4 Find all movies in your area  
+ 
 ***********************
 FUTURE UPDATES
 ***********************
